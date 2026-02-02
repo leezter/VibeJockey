@@ -30,7 +30,7 @@ export default function PromptMixer({ prompts, onChange, onSend }: PromptMixerPr
   };
 
   const addPrompt = (text = '') => {
-    onChange([...prompts, { text, weight: 1 }]);
+    onChange([...prompts, { id: crypto.randomUUID(), text, weight: 1 }]);
   };
 
   const removePrompt = (index: number) => {
@@ -66,7 +66,7 @@ export default function PromptMixer({ prompts, onChange, onSend }: PromptMixerPr
       </p>
       <div className="mt-4 space-y-3">
         {prompts.map((prompt, index) => (
-          <div key={`${prompt.text}-${index}`} className="rounded-xl bg-surface/60 p-3">
+          <div key={prompt.id} className="rounded-xl bg-surface/60 p-3">
             <div className="flex items-center gap-2">
               <input
                 value={prompt.text}

@@ -6,6 +6,7 @@ import type {
   MusicGenerationConfig,
   PlaybackControl,
   WeightedPrompt,
+  FilteredPrompt,
   Scale,
   MusicGenerationMode,
 } from '../lib/lyria/types';
@@ -13,8 +14,8 @@ import type {
 export type SessionStatus = 'disconnected' | 'connecting' | 'ready' | 'playing' | 'paused';
 
 const DEFAULT_PROMPTS: WeightedPrompt[] = [
-  { text: 'minimal techno', weight: 1.0 },
-  { text: 'warm synth bass', weight: 0.6 },
+  { id: crypto.randomUUID(), text: 'minimal techno', weight: 1.0 },
+  { id: crypto.randomUUID(), text: 'warm synth bass', weight: 0.6 },
 ];
 
 const DEFAULT_CONFIG: MusicGenerationConfig = {
@@ -91,7 +92,9 @@ export function useLyriaSession() {
       }
 
       if ('filteredPrompt' in message || 'filtered_prompt' in message) {
-        const filtered = 'filteredPrompt' in message ? message.filteredPrompt : message.filtered_prompt;
+        const filtered = (
+          'filteredPrompt' in message ? message.filteredPrompt : message.filtered_prompt
+        ) as FilteredPrompt | undefined;
         log(`Filtered prompt: ${filtered?.filteredReason ?? filtered?.filtered_reason ?? 'Unknown reason'}`);
         return;
       }

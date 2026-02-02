@@ -1,4 +1,5 @@
 export type WeightedPrompt = {
+  id: string;
   text: string;
   weight: number;
 };
