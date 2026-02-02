@@ -9,25 +9,38 @@ export default function App() {
   const { state, actions } = useLyriaSession();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ink via-slate-950 to-slate-900">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8">
-        <header className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <div className="text-xs uppercase tracking-[0.3em] text-slate-500">Vibe Jockey</div>
-            <h1 className="text-3xl font-semibold text-slate-100">Live Lyria Control Deck</h1>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <label className="flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-xs text-slate-200">
-              <input
-                type="checkbox"
-                checked={state.autoApply}
-                onChange={(event) => actions.setAutoApply(event.target.checked)}
-              />
-              Live apply
-            </label>
-            <div className="rounded-full border border-slate-700 px-4 py-2 text-xs text-slate-300">
-              Real-time Lyria session • 48kHz stereo
+    <div className="min-h-screen p-6">
+      <div className="mx-auto flex max-w-screen-2xl flex-col gap-6">
+        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-[#27272a] pb-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-sm border border-blue-500 bg-blue-950 text-xl font-bold text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+              VJ
             </div>
+            <div>
+              <h1 className="text-3xl font-bold tracking-widest text-slate-100 uppercase font-[Rajdhani]">Vibe Jockey</h1>
+              <div className="text-xs tracking-[0.4em] text-blue-500 uppercase font-semibold">Generative Audio Interface</div>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-4 rounded-sm border border-[#27272a] bg-[#0c0c0e] p-2 shadow-inner">
+             <div className="flex items-center gap-3 px-3 border-r border-[#27272a]">
+                 <div className={`h-2 w-2 rounded-full ${state.status === 'playing' ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-slate-700'}`}></div>
+                 <span className="text-xs font-mono text-slate-400 uppercase">SYS: {state.status.toUpperCase()}</span>
+            </div>
+            <label className="flex cursor-pointer items-center gap-3 px-2">
+              <span className={`text-xs font-bold uppercase tracking-wider ${state.autoApply ? 'text-blue-400 drop-shadow-[0_0_5px_rgba(59,130,246,0.8)]' : 'text-slate-600'}`}>
+                Live Mode
+              </span>
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  className="peer sr-only"
+                  checked={state.autoApply}
+                  onChange={(event) => actions.setAutoApply(event.target.checked)}
+                />
+                <div className="h-4 w-8 rounded-sm border border-slate-700 bg-slate-900 transition-colors peer-checked:border-blue-500 peer-checked:bg-blue-900/50"></div>
+                <div className="absolute left-[3px] top-[3px] h-2.5 w-2.5 rounded-sm bg-slate-500 transition-all peer-checked:translate-x-4 peer-checked:bg-blue-400 shadow-sm"></div>
+              </div>
+            </label>
           </div>
         </header>
 
@@ -62,13 +75,13 @@ export default function App() {
           </div>
 
           <div className="flex flex-col gap-6">
-            <section className="glass rounded-2xl p-5">
-              <h2 className="text-lg font-semibold">Live Tips</h2>
-              <ul className="mt-3 space-y-2 text-sm text-slate-300">
-                <li>Keep prompt weights non-zero and adjust gradually for smooth morphs.</li>
-                <li>Use Reset Context after changing BPM or scale for accurate results.</li>
-                <li>Buffered playback keeps audio smooth under network jitter.</li>
-                <li>Model outputs are instrumental-only and watermarked.</li>
+            <section className="panel rounded-sm p-6">
+              <h2 className="text-sm font-bold tracking-widest text-slate-400 uppercase border-b border-[#27272a] pb-4 mb-4">Operator Manual</h2>
+              <ul className="space-y-3 text-[10px] uppercase tracking-wide text-slate-500 font-mono">
+                <li className="flex gap-2"><span className="text-blue-500">&gt;</span> Morph sounds by sliding weights</li>
+                <li className="flex gap-2"><span className="text-blue-500">&gt;</span> Reset Context on major changes</li>
+                <li className="flex gap-2"><span className="text-blue-500">&gt;</span> Buffer handles network jitter</li>
+                <li className="flex gap-2"><span className="text-blue-500">&gt;</span> Output is watermarked</li>
               </ul>
             </section>
             <SessionLog

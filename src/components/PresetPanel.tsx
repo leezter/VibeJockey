@@ -45,21 +45,23 @@ export default function PresetPanel({ onApply }: PresetPanelProps) {
   };
 
   return (
-    <section className="glass rounded-2xl p-5">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Instant Vibes</h2>
-        <span className="text-xs text-slate-400">Tap to load</span>
+    <section className="panel rounded-sm p-6 mt-6">
+       <div className="flex items-center justify-between border-b border-[#27272a] pb-4 mb-4">
+        <h2 className="text-sm font-bold tracking-widest text-slate-400 uppercase">Preset Bank</h2>
       </div>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-2 gap-3">
         {presets.map((preset) => (
           <button
             key={preset.label}
             onClick={() => applyPreset(preset.prompts)}
-            className="rounded-xl border border-slate-700 bg-surface/70 p-4 text-left text-sm text-slate-200 hover:border-accent"
+            className="group relative flex flex-col items-start justify-between h-20 overflow-hidden rounded-sm border border-[#27272a] bg-[#0c0c0e] p-3 transition-all hover:border-blue-500 hover:bg-[#13151a] active:translate-y-[1px] active:border-blue-400"
           >
-            <div className="font-semibold text-slate-100">{preset.label}</div>
-            <div className="mt-2 text-xs text-slate-400">
-              {preset.prompts.map((prompt) => prompt.text).join(' • ')}
+             <div className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="h-1.5 w-1.5 rounded-full bg-blue-500 shadow-[0_0_5px_#3b82f6]"></div>
+             </div>
+            <div className="font-bold uppercase tracking-wide text-xs text-slate-300 group-hover:text-white font-[Rajdhani]">{preset.label}</div>
+            <div className="w-full text-[10px] text-slate-600 truncate font-mono group-hover:text-blue-400 uppercase">
+              {preset.prompts.map((prompt) => prompt.text).slice(0, 2).join(' / ')}..
             </div>
           </button>
         ))}

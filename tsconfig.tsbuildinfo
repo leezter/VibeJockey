@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/configpanel.tsx","./src/components/deckcontrols.tsx","./src/components/presetpanel.tsx","./src/components/promptmixer.tsx","./src/components/sessionlog.tsx","./src/lib/audio/pcmplayer.ts","./src/lib/lyria/lyriaclient.ts","./src/lib/lyria/types.ts","./src/state/uselyriasession.ts"],"version":"5.9.3"}
