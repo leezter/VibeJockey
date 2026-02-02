@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-ink text-slate-100 antialiased;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.glass {
+  background: rgba(18, 24, 38, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  backdrop-filter: blur(16px);
+}
+
+.range {
+  @apply w-full accent-accent;
+}
+
+.input {
+  @apply w-full rounded-lg border border-slate-700 bg-ink/60 px-3 py-2 text-sm text-slate-100 focus:border-accent focus:outline-none;
+}
