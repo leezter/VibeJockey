@@ -26,7 +26,7 @@ Vibe Jockey is a client-side React application that directly connects to the mus
 
 ## Getting started
 1. Create a Gemini API key in AI Studio.
-2. Copy .env.example to .env and set VITE_GEMINI_API_KEY.
+2. Copy .env.example to .env and set VITE_GEMINI_API_KEY. The app will automatically connect on launch if this is set.
 3. Install dependencies: npm install
 4. Start the dev server: npm run dev
 
@@ -37,5 +37,6 @@ Vibe Jockey is a client-side React application that directly connects to the mus
 
 ## Notes
 - Audio is instrumental-only and watermarked by the model.
+- Default configuration is tuned for upbeat experimentation (126 BPM, Diversity mode).
 - Change BPM/scale and use Reset Context for best results.
 - Keep prompt weights non-zero and evolve them gradually for smooth transitions.
