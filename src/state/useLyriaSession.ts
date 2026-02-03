@@ -22,14 +22,14 @@ const DEFAULT_CONFIG: MusicGenerationConfig = {
   temperature: 1.1,
   topK: 40,
   guidance: 4,
-  bpm: 120,
+  bpm: 126,
   density: 0.5,
   brightness: 0.55,
   scale: 'SCALE_UNSPECIFIED',
   muteBass: false,
   muteDrums: false,
   onlyBassAndDrums: false,
-  musicGenerationMode: 'QUALITY',
+  musicGenerationMode: 'DIVERSITY',
 };
 
 const defaultLog = (message: string) => ({
@@ -129,7 +129,10 @@ export function useLyriaSession() {
     }
     setStatus('connecting');
     playerRef.current = new PcmPlayer();
-    await playerRef.current.ensureStarted();
+    
+    // We do NOT wait for audio context here because browsers block autoplay
+    // without user interaction. We initialize it on first PLAY.
+    
     clientRef.current = new LyriaClient({
       apiKey,
       model,
@@ -213,6 +216,14 @@ export function useLyriaSession() {
   }, []);
 
   const canSend = status === 'ready' || status === 'playing' || status === 'paused';
+
+  const didAutoConnect = useRef(false);
+  useEffect(() => {
+    if (!didAutoConnect.current && apiKey && status === 'disconnected') {
+      didAutoConnect.current = true;
+      connect();
+    }
+  }, [apiKey, connect, status]);
 
   useEffect(() => {
     if (!autoApply || !canSend) {
