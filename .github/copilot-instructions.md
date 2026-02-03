@@ -1,24 +1,39 @@
-- [x] Verify that the copilot-instructions.md file in the .github directory is created.
+# Copilot Instructions for Vibe Jockey
 
-- [x] Clarify Project Requirements
+## Project Overview
+Vibe Jockey is a real-time DJing interface for the Lyria music generation model. It is a Single Page Application (SPA) built with:
+- **Framework:** React 18 + TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **API:** Google Gemini / Lyria RealTime via WebSockets
 
-- [x] Scaffold the Project
+## Architecture specific for AI Context
 
-- [x] Customize the Project
+### Core Libraries (`/src/lib`)
+- **`lyria/LyriaClient.ts`**: The low-level WebSocket client. It manages the connection state, sends commands (Create, Predict, Edit), and handles incoming responses.
+- **`audio/PcmPlayer.ts`**: Handles raw audio playback. It uses the Web Audio API (`AudioContext`) to schedule buffer nodes. It is crucial for gapless playback of the streamed chunks.
 
-- [x] Install Required Extensions
+### Components (`/src/components`)
+- **`ConfigPanel.tsx`**: Controls for generation parameters (Temperature, TopK, Guidance).
+- **`DeckControls.tsx`**: Transport controls (Play, Pause, Reset).
+- **`PromptMixer.tsx`**: Allows blending of different text prompts with weights.
+- **`PresetPanel.tsx`**: Quick access to predefined configurations.
+- **`SessionLog.tsx`**: detailed logs of WebSocket events for debugging.
 
-- [x] Compile the Project
+### State Management
+- **`state/useLyriaSession.ts`**: A custom hook that instantiates the `LyriaClient` and `PcmPlayer`. It exposes the state and control functions to the React components.
 
-- [x] Create and Run Task
+## Development Guidelines
 
-- [x] Launch the Project
+1. **Audio Latency**: When modifying `PcmPlayer` or `LyriaClient`, prioritize low latency and seamless buffer scheduling.
+2. **Type Safety**: Maintain strict typing for the connection messages in `lyria/types.ts`.
+3. **Styling**: Use utility classes (Tailwind) for all styling. Avoid custom CSS files unless necessary for complex animations.
+4. **Environment Variables**: The API key is loaded from `import.meta.env.VITE_GEMINI_API_KEY`. Never hardcode keys.
 
-- [x] Ensure Documentation is Complete
-- Work through each checklist item systematically.
-- Keep communication concise and focused.
-- Follow development best practices.
+## Running the Application
+When helping the user run or debug the app:
+- Verify `.env` exists with the API key.
+- Commands:
+    - `npm install` (First time)
+    - `npm run dev` (Start server)
 
-Launch instructions (reference)
-- Install dependencies: npm install
-- Run dev server: npm run dev

@@ -9,6 +9,21 @@ Vibe Jockey is a responsive, real-time DJing webapp built around Lyria RealTime.
 - Bass/drum isolation toggles
 - Live metadata and safety warnings display
 
+## How it Works
+Vibe Jockey is a client-side React application that directly connects to the music generation API via WebSockets.
+
+**Core Components:**
+- **LyriaClient:** Handles WebSocket communication, including session management and audio chunk buffering.
+- **PcmPlayer:** A dedicated audio processor that queues and plays back the raw PCM audio data received from the model.
+- **React State:** `useLyriaSession` hook bridges the imperative WebSocket events with the declarative React UI.
+
+**Data Flow:**
+1. User configures settings (BPM, prompts) in the UI.
+2. `LyriaClient` sends a JSON message to the server.
+3. Server streams back PCM audio chunks and metadata events.
+4. `PcmPlayer` schedules audio playback for seamless streaming.
+5. UI updates in real-time to show beat progress and generation status.
+
 ## Getting started
 1. Create a Gemini API key in AI Studio.
 2. Copy .env.example to .env and set VITE_GEMINI_API_KEY.

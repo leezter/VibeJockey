@@ -2,6 +2,14 @@ import type { WeightedPrompt } from '../lib/lyria/types';
 
 const presets: { label: string; prompts: WeightedPrompt[] }[] = [
   {
+    label: 'Berlin Vibes',
+    prompts: [
+      { id: crypto.randomUUID(), text: 'Berlin techno', weight: 0.3 },
+      { id: crypto.randomUUID(), text: 'Berlin deep house', weight: 1.4 },
+      { id: crypto.randomUUID(), text: 'Berlin tech house', weight: 2.0 },
+    ],
+  },
+  {
     label: 'Night drive',
     prompts: [
       { id: crypto.randomUUID(), text: 'synthwave', weight: 1.2 },
