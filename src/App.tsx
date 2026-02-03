@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import ConfigPanel from './components/ConfigPanel';
 import DeckControls from './components/DeckControls';
+import SettingsModal from './components/SettingsModal';
 import PresetPanel from './components/PresetPanel';
 import PromptMixer from './components/PromptMixer';
 import SessionLog from './components/SessionLog';
@@ -7,6 +9,7 @@ import { useLyriaSession } from './state/useLyriaSession';
 
 export default function App() {
   const { state, actions } = useLyriaSession();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
     <div className="min-h-screen p-6">
@@ -41,19 +44,33 @@ export default function App() {
                 <div className="absolute left-[3px] top-[3px] h-2.5 w-2.5 rounded-sm bg-slate-500 transition-all peer-checked:translate-x-4 peer-checked:bg-blue-400 shadow-sm"></div>
               </div>
             </label>
+            <div className="h-6 w-px bg-[#27272a] mx-2"></div>
+            <button
+                onClick={() => setIsSettingsOpen(true)}
+                className="text-slate-500 hover:text-blue-400 transition-colors"
+                title="Settings"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
           </div>
         </header>
+
+        <SettingsModal
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+            status={state.status}
+            apiKey={state.apiKey}
+            model={state.model}
+            setApiKey={actions.setApiKey}
+            setModel={actions.setModel}
+            onConnect={actions.connect}
+            onDisconnect={actions.disconnect}
+        />
 
         <div className="grid gap-6 lg:grid-cols-[1.1fr_1.4fr_1.1fr]">
           <div className="flex flex-col gap-6">
             <DeckControls
               status={state.status}
-              apiKey={state.apiKey}
-              model={state.model}
-              setApiKey={actions.setApiKey}
-              setModel={actions.setModel}
-              onConnect={actions.connect}
-              onDisconnect={actions.disconnect}
               onPlayback={actions.sendPlayback}
             />
             <PresetPanel onApply={actions.setPrompts} />
